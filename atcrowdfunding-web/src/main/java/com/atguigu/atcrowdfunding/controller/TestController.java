@@ -30,7 +30,7 @@ public class TestController {
 
     @RequestMapping("/index")
     public String index(){
-        return "index";
+        return "index1";
     }
 
     @ResponseBody

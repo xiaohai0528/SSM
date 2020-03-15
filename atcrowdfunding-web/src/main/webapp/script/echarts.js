@@ -1580,7 +1580,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                while (el) {
 	                    var modelInfo = el.__ecComponentInfo;
 	                    if (modelInfo != null) {
-	                        return ecInstance._model.getComponent(modelInfo.mainType, modelInfo.index);
+	                        return ecInstance._model.getComponent(modelInfo.mainType, modelInfo.index1);
 	                    }
 	                    el = el.parent;
 	                }
@@ -4127,14 +4127,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (!mainType
 	                || !queryType
 	                || value == null
-	                || (queryType === 'index' && value === 'none')
+	                || (queryType === 'index1.jsp' && value === 'none')
 	                || (opt && opt.includeMainTypes && zrUtil.indexOf(opt.includeMainTypes, mainType) < 0)
 	            ) {
 	                return;
 	            }
 
 	            var queryParam = {mainType: mainType};
-	            if (queryType !== 'index' || value !== 'all') {
+	            if (queryType !== 'index1.jsp' || value !== 'all') {
 	                queryParam[queryType] = value;
 	            }
 
@@ -28131,8 +28131,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        // When only xAxisIndex or yAxisIndex given, find its first cartesian.
 	        for (var i = 0, coordList = this._coordsList; i < coordList.length; i++) {
-	            if (coordList[i].getAxis('x').index === xAxisIndex
-	                || coordList[i].getAxis('y').index === yAxisIndex
+	            if (coordList[i].getAxis('x').index1 === xAxisIndex
+	                || coordList[i].getAxis('y').index1 === yAxisIndex
 	            ) {
 	                return coordList[i];
 	            }
@@ -31093,7 +31093,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    function getAxisKey(axis) {
-	        return axis.dim + axis.index;
+	        return axis.dim + axis.index1;
 	    }
 
 	    function calBarWidthAndOffset(barSeries, api) {
@@ -36733,7 +36733,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                        // legend color fetching (see seriesColor.js).
 	            colorAlpha: null,           // Array. Specify color alpha range of each level, like [0.2, 0.8]
 	            colorSaturation: null,      // Array. Specify color saturation of each level, like [0.2, 0.5]
-	            colorMappingBy: 'index',    // 'value' or 'index' or 'id'.
+	            colorMappingBy: 'index1.jsp',    // 'value' or 'index' or 'id'.
 	            visibleMin: 10,             // If area less than this threshold (unit: pixel^2), node will not
 	                                        // be rendered. Only works when sort is 'asc' or 'desc'.
 	            childrenVisibleMin: null,   // If area of a node less than this threshold (unit: pixel^2),
@@ -39039,7 +39039,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            visual: rangeVisual.range
 	        };
 	        if (opt.type === 'color'
-	            && (colorMappingBy === 'index' || colorMappingBy === 'id')
+	            && (colorMappingBy === 'index1.jsp' || colorMappingBy === 'id')
 	        ) {
 	            opt.mappingMethod = 'category';
 	            opt.loop = true;
@@ -39076,7 +39076,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var mappingType = mapping.type;
 	            var colorMappingBy = mappingType === 'color' && mapping.__drColorMappingBy;
 	            var value =
-	                colorMappingBy === 'index'
+	                colorMappingBy === 'index1.jsp'
 	                ? index
 	                : colorMappingBy === 'id'
 	                ? seriesModel.mapIdToIndex(child.getId())
@@ -53327,7 +53327,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function getCartesian(grid, axis) {
 	        var opt = {};
-	        opt[axis.dim + 'AxisIndex'] = axis.index;
+	        opt[axis.dim + 'AxisIndex'] = axis.index1;
 	        return grid.getCartesian(opt);
 	    }
 
@@ -62571,7 +62571,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     *                            }
 	     * @param {Object} context
 	     */
-	    helper.eachAxisDim = helper.createNameEach(AXIS_DIMS, ['axisIndex', 'axis', 'index', 'id']);
+	    helper.eachAxisDim = helper.createNameEach(AXIS_DIMS, ['axisIndex', 'axis', 'index1.jsp', 'id']);
 
 	    /**
 	     * If tow dataZoomModels has the same axis controlled, we say that they are 'linked'.
@@ -66945,7 +66945,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         */
 	        getSelectedMapKey: function (piece) {
 	            return this._mode === 'categories'
-	                ? piece.value + '' : piece.index + '';
+	                ? piece.value + '' : piece.index1 + '';
 	        },
 
 	        /**

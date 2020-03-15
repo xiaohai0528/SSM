@@ -114,7 +114,7 @@
                 if(result.success){
                    window.location.href = "main";
                 }else {
-                    layer.msg("用户登录账号或密码不正确，请重新输入", {time:3000, icon:5, shift:6}, function () {
+                    layer.msg("账号或密码不正确，请重新输入", {time:3000, icon:5, shift:6}, function () {
 
                     });
                 }

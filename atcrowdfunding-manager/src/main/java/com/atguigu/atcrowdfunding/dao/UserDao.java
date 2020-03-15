@@ -4,6 +4,7 @@ import com.atguigu.atcrowdfunding.bean.User;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserDao {
 
@@ -12,4 +13,8 @@ public interface UserDao {
 
     @Select("select * from t_user where loginacct = #{loginacct} and userpswd = #{userpswd}")
     User query4Login(User user);
+
+    List<User> pageQueryData(Map<String,Object> map);
+
+    int pageQueryCount(Map<String,Object> map);
 }
