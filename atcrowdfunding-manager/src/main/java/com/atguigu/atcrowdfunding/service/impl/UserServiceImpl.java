@@ -17,4 +17,9 @@ public class UserServiceImpl implements UserService {
     public List<User> queryAll() {
         return userDao.queryAll();
     }
+
+    public User query4Login(User user) {
+        return userDao.query4Login(user);
+    }
+
 }
