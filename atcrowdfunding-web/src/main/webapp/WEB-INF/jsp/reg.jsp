@@ -25,9 +25,13 @@
 </nav>
 
 <div class="container">
-    <h1 style="color: red">${param.errorMsg}</h1>
-    <form id="loginForm" action="dologin" method="post" class="form-signin" role="form">
-        <h2 class="form-signin-heading"><i class="glyphicon glyphicon-user"></i> 用户登录</h2>
+
+    <form class="form-signin" role="form">
+        <h2 class="form-signin-heading"><i class="glyphicon glyphicon-log-in"></i> 用户注册</h2>
+        <div class="form-group has-success has-feedback">
+            <input type="text" class="form-control" id="username" name="username" placeholder="请输入真实姓名" autofocus>
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        </div>
         <div class="form-group has-success has-feedback">
             <input type="text" class="form-control" id="loginacct" name="loginacct" placeholder="请输入登录账号" autofocus>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -37,44 +41,52 @@
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="form-group has-success has-feedback">
+            <input type="text" class="form-control" id="email" name="email" placeholder="请输入邮箱地址" style="margin-top:10px;">
+            <span class="glyphicon glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-success has-feedback">
             <select class="form-control" >
-                <option value="member">会员</option>
-                <option value="user">管理</option>
+                <option>会员</option>
+                <option>管理</option>
             </select>
         </div>
         <div class="checkbox">
             <label>
-                <input type="checkbox" value="remember-me"> 记住我
-            </label>
-            <br>
-            <label>
                 忘记密码
             </label>
             <label style="float:right">
-                <a href="reg">我要注册</a>
+                <a href="login.html">我有账号</a>
             </label>
         </div>
-        <a class="btn btn-lg btn-success btn-block" onclick="dologin()" > 登录</a>
+        <a class="btn btn-lg btn-success btn-block" onclick="dologin()" > 注册</a>
     </form>
 </div>
 <script src="jquery/jquery-2.1.1.min.js"></script>
-<script src="jquery/jquery.toggle-password.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="layer/layer.js"></script>
 <script>
     function dologin() {
         //非空校验
+        var username = $("#username").val();
         var loginacct = $("#loginacct").val();
         var userpswd = $("#userpswd").val();
+        var email = $("#email").val()
         //表单元素value取值不会为null，取值是空字符串
-        if (loginacct == "" && userpswd == "") {
+        if (username=="" && loginacct == "" && userpswd == "" && email == "") {
 
-            layer.msg("账号和密码不能为空，请输入", {time: 3000, icon: 5, shift: 6}, function () {
+            layer.msg("姓名，账号，密码和邮箱不能为空，请输入", {time: 3000, icon: 5, shift: 6}, function () {
 
             });
             return;
 
         }else{
+            if (username == "") {
+                layer.msg("姓名不能为空，请输入", {time: 3000, icon: 5, shift: 6}, function () {
+
+                });
+                //alert("用户登录账号不能为空，请输入");
+                return;
+            }
 
 
             if (loginacct == "") {
@@ -93,6 +105,14 @@
                 //alert("用户登录密码不能为空，请输入");
                 return;
             }
+            if (email == "") {
+                layer.msg("邮箱不能为空，请输入", {time: 3000, icon: 5, shift: 6}, function () {
+
+                });
+                //alert("用户登录密码不能为空，请输入");
+                return;
+            }
+
         }
 
         //提交表单
@@ -102,10 +122,12 @@
         var loadingIndex =null;
         $.ajax({
             type : "POST",
-            url  : "doAJXLogin",
+            url  : "saveUser",
             data : {
+                "username" : username,
                 "loginacct" : loginacct,
-                "userpswd" : userpswd
+                "userpswd" : userpswd,
+                "email" : email
             },
             beforeSend : function () {
                 loadingIndex = layer.msg('处理中', {icon: 16});
@@ -113,7 +135,7 @@
             success : function (result) {
                 layer.close(loadingIndex);
                 if(result.success){
-                   window.location.href = "main";
+                    loadingIndex = layer.msg("注册成功", {icon: 16});
                 }else {
                     layer.msg("账号或密码不正确，请重新输入", {time:3000, icon:5, shift:6}, function () {
 
@@ -122,18 +144,12 @@
 
             }
         });
-
-        $(function(){
-            $('#userpswd').togglePassword({
-                el: '#toggleuserpswd'
-            });
-        });
-       /* var type = $(":selected").val();
-        if ( type == "user" ) {
-            window.location.href = "main.html";
-        } else {
-            window.location.href = "member.html";
-        }*/
+        /* var type = $(":selected").val();
+         if ( type == "user" ) {
+             window.location.href = "main.html";
+         } else {
+             window.location.href = "member.html";
+         }*/
     }
 </script>
 </body>

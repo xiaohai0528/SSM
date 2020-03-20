@@ -1,5 +1,6 @@
 package com.atguigu.atcrowdfunding.controller;
 
+import com.atguigu.atcrowdfunding.Utils.MD5Utils;
 import com.atguigu.atcrowdfunding.bean.AJAXResult;
 import com.atguigu.atcrowdfunding.bean.User;
 import com.atguigu.atcrowdfunding.service.UserService;
@@ -17,6 +18,10 @@ public class DispatcherController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 返回到登录页面
+     * @return
+     */
     @RequestMapping("/login")
     public String login(){
         return "login";
@@ -29,10 +34,24 @@ public class DispatcherController {
         return "redirect:login";
     }
 
+    /**
+     * 跳转到首页
+     * @return
+     */
     @RequestMapping("/main")
     public String mian(){
         return "main";
     }
+
+    /**
+     * 跳转到注册页面
+     * @return
+     */
+    @RequestMapping("/reg")
+    public String reg() {
+        return "reg";
+    }
+
 
     @ResponseBody
     @RequestMapping("/doAJXLogin")
@@ -40,8 +59,11 @@ public class DispatcherController {
 
         AJAXResult result = new AJAXResult();
 
+        String pswd = MD5Utils.md5(user.getUserpswd());
+        user.setUserpswd(pswd);
         User dbUser = userService.query4Login(user);
         if(dbUser != null){
+
             session.setAttribute("loginUser",dbUser);
             result.setSuccess(true);
         }else {
@@ -85,5 +107,34 @@ public class DispatcherController {
         }
 
 
+    }
+
+    /**
+     * 执行注册
+     * @param user
+     * @return
+     */
+
+    @ResponseBody
+    @RequestMapping("/saveUser")
+    public Object saveUser(User user){
+
+        AJAXResult result = new AJAXResult();
+
+        User dbUser = userService.query4Login(user);
+
+
+
+        if(dbUser == null){
+            String pswd = MD5Utils.md5(user.getUserpswd());
+            user.setUserpswd(pswd);
+            userService.saveUser(user);
+            result.setSuccess(true);
+        }else {
+            result.setSuccess(false);
+
+        }
+
+        return result;
     }
 }

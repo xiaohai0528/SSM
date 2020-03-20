@@ -31,4 +31,8 @@ public class UserServiceImpl implements UserService {
         return userDao.pageQueryCount(map);
     }
 
+    public void saveUser(User user){
+        userDao.saveUser(user);
+    }
+
 }
