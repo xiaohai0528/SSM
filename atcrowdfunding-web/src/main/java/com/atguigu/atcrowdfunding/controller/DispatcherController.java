@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class DispatcherController {
@@ -52,7 +53,22 @@ public class DispatcherController {
         return "reg";
     }
 
+    /**
+     * 跳转到找回密码页面
+     * @return
+     */
 
+    @RequestMapping("/forget")
+    public String forget() {
+        return "forget";
+    }
+
+    /**
+     * 登录验证
+     * @param user
+     * @param session
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/doAJXLogin")
     public Object doAJXLogin(User user, HttpSession session){
@@ -74,7 +90,7 @@ public class DispatcherController {
     }
 
     /**
-     * 执行登录
+     * 执行登录反馈
      * @return
      */
     @RequestMapping("/dologin")
@@ -121,19 +137,25 @@ public class DispatcherController {
 
         AJAXResult result = new AJAXResult();
 
-        User dbUser = userService.query4Login(user);
+        String pswd = MD5Utils.md5(user.getUserpswd());
+        user.setUserpswd(pswd);
+
+        List<User> users = userService.queryAll();
 
 
 
-        if(dbUser == null){
-            String pswd = MD5Utils.md5(user.getUserpswd());
-            user.setUserpswd(pswd);
-            userService.saveUser(user);
-            result.setSuccess(true);
-        }else {
-            result.setSuccess(false);
+        for (User user1 : users) {
+            if (user.getLoginacct() == user1.getLoginacct() && user.getEmail() == user1.getEmail()) {
+                result.setSuccess(false);
+                return result;
+            }
+
 
         }
+
+        userService.saveUser(user);
+        result.setSuccess(true);
+
 
         return result;
     }

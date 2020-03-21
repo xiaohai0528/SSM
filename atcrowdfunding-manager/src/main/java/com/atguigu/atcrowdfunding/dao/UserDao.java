@@ -21,4 +21,5 @@ public interface UserDao {
 
     @Insert("insert into  t_user (username,loginacct,userpswd,email) values (#{username},#{loginacct},#{userpswd},#{email})")
     void saveUser(User user);
+
 }

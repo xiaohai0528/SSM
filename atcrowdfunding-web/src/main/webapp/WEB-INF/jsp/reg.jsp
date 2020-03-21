@@ -52,7 +52,7 @@
         </div>
         <div class="checkbox">
             <label>
-                忘记密码
+
             </label>
             <label style="float:right">
                 <a href="login.html">我有账号</a>
@@ -137,7 +137,7 @@
                 if(result.success){
                     loadingIndex = layer.msg("注册成功", {icon: 16});
                 }else {
-                    layer.msg("账号或密码不正确，请重新输入", {time:3000, icon:5, shift:6}, function () {
+                    layer.msg("用户已存在，无法注册", {time:3000, icon:5, shift:6}, function () {
 
                     });
                 }

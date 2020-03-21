@@ -11,5 +11,4 @@
             count(*)
         from t_user
     </select>
-
 </mapper>
