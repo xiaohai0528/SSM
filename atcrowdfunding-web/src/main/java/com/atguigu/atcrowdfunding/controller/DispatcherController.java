@@ -140,21 +140,19 @@ public class DispatcherController {
         String pswd = MD5Utils.md5(user.getUserpswd());
         user.setUserpswd(pswd);
 
-        List<User> users = userService.queryAll();
 
+        if (userService.query4LoginEmail(user) == 0 ) {
 
+            userService.saveUser(user);
+           result.setSuccess(true);
 
-        for (User user1 : users) {
-            if (user.getLoginacct() == user1.getLoginacct() && user.getEmail() == user1.getEmail()) {
-                result.setSuccess(false);
-                return result;
-            }
+        }else {
 
-
+            result.setSuccess(false);
         }
 
-        userService.saveUser(user);
-        result.setSuccess(true);
+
+
 
 
         return result;

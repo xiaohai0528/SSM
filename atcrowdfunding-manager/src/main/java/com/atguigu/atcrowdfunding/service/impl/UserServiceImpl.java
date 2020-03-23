@@ -35,4 +35,10 @@ public class UserServiceImpl implements UserService {
         userDao.saveUser(user);
     }
 
+    public int query4LoginEmail(User user){
+      return userDao.query4LoginEmail(user);
+    }
+
+
+
 }

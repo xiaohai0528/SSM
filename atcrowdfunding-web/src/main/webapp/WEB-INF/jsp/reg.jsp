@@ -137,7 +137,7 @@
                 if(result.success){
                     loadingIndex = layer.msg("注册成功", {icon: 16});
                 }else {
-                    layer.msg("用户已存在，无法注册", {time:3000, icon:5, shift:6}, function () {
+                    layer.msg("用户名或者邮箱已存在，无法注册", {time:3000, icon:5, shift:6}, function () {
 
                     });
                 }

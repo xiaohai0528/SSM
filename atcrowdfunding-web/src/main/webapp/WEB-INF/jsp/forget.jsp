@@ -37,6 +37,10 @@
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-success has-feedback">
+            <input type="text" class="form-control" id="userspswd" name="userspswd" placeholder="再次请输入新密码" autofocus>
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        </div>
+        <div class="form-group has-success has-feedback">
             <input type="text" class="form-control" id="usercode" name="usercode" placeholder="请输入邮箱验证码" style="margin-top:10px;">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
@@ -58,6 +62,7 @@
     function dologin() {
         //非空校验
         var userpswd = $("#userpswd").val();
+        var userspswd = $("#userspswd").val();
         var usercode = $("#usercode").val();
         var email = $("#email").val()
         //表单元素value取值不会为null，取值是空字符串
@@ -78,6 +83,13 @@
             }
 
 
+            if (userpswd != userspswd) {
+                layer.msg("两次密码不一致，请重新输入", {time: 3000, icon: 5, shift: 6}, function () {
+
+                });
+                //alert("用户登录账号不能为空，请输入");
+                return;
+            }
             if (userpswd == "") {
                 layer.msg("新密码不能为空，请输入", {time: 3000, icon: 5, shift: 6}, function () {
 

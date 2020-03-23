@@ -16,4 +16,7 @@ public interface UserService {
     int pageQueryCount(Map<String,Object> map);
 
     void saveUser(User user);
+
+    int query4LoginEmail(User user);
+
 }
