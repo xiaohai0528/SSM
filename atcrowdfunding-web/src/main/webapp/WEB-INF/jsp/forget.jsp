@@ -98,7 +98,7 @@
         }
 
         //提交表单
-        //alert("提交表单");
+        //alert("提交表单 ");
         //$("#loginForm").submit();
         //使用AJAX提交数据
         var loadingIndex =null;
