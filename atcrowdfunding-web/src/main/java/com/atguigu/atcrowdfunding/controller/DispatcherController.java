@@ -141,18 +141,45 @@ public class DispatcherController {
         user.setUserpswd(pswd);
 
 
-        if (userService.query4LoginEmail(user) == 0 ) {
+        List<User> dbUser = userService.queryLoginEmail(user);
 
-            userService.saveUser(user);
-           result.setSuccess(true);
+        String u = null;
+        int i = 0;
+        String loginacct = null;
+        //String email = null;
 
-        }else {
 
-            result.setSuccess(false);
+        for (User user1 : dbUser) {
+            loginacct = user1.getLoginacct();
+
+            if(user.getLoginacct() != loginacct){
+                loginacct = null;
+            }
+            //email = user1.getEmail();
         }
 
+        if (dbUser == null ){
+
+            userService.saveUser(user);
+            result.setSuccrsss(0);
+            System.out.println("数据为空"+i);
+
+        }else {
+            if ( loginacct != null ) {
+                result.setSuccrsss(1);
+                i = result.getSuccrsss();
+                System.out.println(loginacct+"获取"+i);
+
+            }else{
+                result.setSuccrsss(2);
+                i = result.getSuccrsss();
+
+                System.out.println("邮箱获取"+i);
 
 
+            }
+
+        }
 
 
         return result;

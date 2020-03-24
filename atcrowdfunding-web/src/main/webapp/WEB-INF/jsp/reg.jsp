@@ -41,6 +41,10 @@
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="form-group has-success has-feedback">
+            <input type="text" class="form-control" id="userspswd" name="userspswd" placeholder="请再次输入登录密码" autofocus>
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        </div>
+        <div class="form-group has-success has-feedback">
             <input type="text" class="form-control" id="email" name="email" placeholder="请输入邮箱地址" style="margin-top:10px;">
             <span class="glyphicon glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
@@ -70,6 +74,7 @@
         var username = $("#username").val();
         var loginacct = $("#loginacct").val();
         var userpswd = $("#userpswd").val();
+        var userspswd = $("#userspswd").val();
         var email = $("#email").val()
         //表单元素value取值不会为null，取值是空字符串
         if (username=="" && loginacct == "" && userpswd == "" && email == "") {
@@ -105,6 +110,13 @@
                 //alert("用户登录密码不能为空，请输入");
                 return;
             }
+            if (userpswd != userspswd) {
+                layer.msg("两次密码不一致，请重新输入", {time: 3000, icon: 5, shift: 6}, function () {
+
+                });
+                //alert("用户登录账号不能为空，请输入");
+                return;
+            }
             if (email == "") {
                 layer.msg("邮箱不能为空，请输入", {time: 3000, icon: 5, shift: 6}, function () {
 
@@ -112,6 +124,14 @@
                 //alert("用户登录密码不能为空，请输入");
                 return;
             }
+
+            /**  验证邮箱  **/
+            /*if (email != /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/){
+                layer.msg("邮箱格式正确，请重新输入", {time: 3000, icon: 5, shift: 6}, function () {
+
+                });
+                return
+            }*/
 
         }
 
@@ -134,12 +154,19 @@
             },
             success : function (result) {
                 layer.close(loadingIndex);
-                if(result.success){
+                if(result.succrsss == 0){
+
                     loadingIndex = layer.msg("注册成功", {icon: 16});
                 }else {
-                    layer.msg("用户名或者邮箱已存在，无法注册", {time:3000, icon:5, shift:6}, function () {
+                    if(result.succrsss == 1) {
+                        layer.msg("用户名已存在，无法注册", {time: 3000, icon: 5, shift: 6}, function () {
 
-                    });
+                        });
+                    }else{
+                        layer.msg("邮箱已存在，无法注册", {time: 3000, icon: 5, shift: 6}, function () {
+
+                        });
+                    }
                 }
 
             }

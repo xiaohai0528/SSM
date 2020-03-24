@@ -3,6 +3,7 @@ package com.atguigu.atcrowdfunding.bean;
 public class AJAXResult {
 
     private boolean success;
+    private int succrsss;
     private Object data;
 
     public Object getData() {
@@ -19,5 +20,13 @@ public class AJAXResult {
 
     public void setSuccess(boolean success) {
         this.success = success;
+    }
+
+    public int getSuccrsss() {
+        return succrsss;
+    }
+
+    public void setSuccrsss(int succrsss) {
+        this.succrsss = succrsss;
     }
 }

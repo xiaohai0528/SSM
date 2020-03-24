@@ -17,6 +17,9 @@ public interface UserService {
 
     void saveUser(User user);
 
-    int query4LoginEmail(User user);
+    /*int query4LoginEmail(User user);*/
+
+
+    List<User> queryLoginEmail(User user);
 
 }

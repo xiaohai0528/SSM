@@ -22,8 +22,9 @@ public interface UserDao {
     @Insert("insert into  t_user (username,loginacct,userpswd,email) values (#{username},#{loginacct},#{userpswd},#{email})")
     void saveUser(User user);
 
-    int query4LoginEmail(User user);
+    /*int query4LoginEmail(User user);*/
 
+    List<User> queryLoginEmail(User user);
 
 
 }

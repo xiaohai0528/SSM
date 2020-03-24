@@ -12,10 +12,13 @@
         from t_user
     </select>
 
-    <select id="query4LoginEmail" resultType="int">
+    <!--<select id="query4LoginEmail" resultType="int">
         select count(*) from t_user where loginacct = #{loginacct} or  email = #{email}
-    </select>
+    </select>-->
 
+    <select id="queryLoginEmail" resultType="com.atguigu.atcrowdfunding.bean.User">
+        select * from t_user where loginacct = #{loginacct} or  email = #{email}
+    </select>
 
 
 </mapper>
