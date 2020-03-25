@@ -33,16 +33,16 @@
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-success has-feedback">
-            <input type="text" class="form-control" id="loginacct" name="loginacct" placeholder="请输入登录账号" autofocus>
+            <input type="text" class="form-control" id="loginacct" name="loginacct" placeholder="请输入登录账号" style="margin-top:10px;">
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-success has-feedback">
-            <input type="text" class="form-control" id="userpswd" name="userpswd" placeholder="请输入登录密码" style="margin-top:10px;">
+            <input type="password" class="form-control" id="userpswd" name="userpswd" for="password"  placeholder="请输入登录密码" >
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="form-group has-success has-feedback">
-            <input type="text" class="form-control" id="userspswd" name="userspswd" placeholder="请再次输入登录密码" autofocus>
-            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            <input type="password" class="form-control" id="userspswd" name="userspswd" for="password" placeholder="请再次输入登录密码" style="margin-top:10px;">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="form-group has-success has-feedback">
             <input type="text" class="form-control" id="email" name="email" placeholder="请输入邮箱地址" style="margin-top:10px;">
@@ -54,21 +54,32 @@
                 <option>管理</option>
             </select>
         </div>
-        <div class="checkbox">
-            <label>
 
-            </label>
-            <label style="float:right">
+
+            <label>
                 <a href="login.html">我有账号</a>
             </label>
+        <div style="float:right">
+            <input type="checkbox" id="togglePassword"><label for="togglePassword">显示密码</label>
+
         </div>
         <a class="btn btn-lg btn-success btn-block" onclick="dologin()" > 注册</a>
     </form>
 </div>
 <script src="jquery/jquery-2.1.1.min.js"></script>
+<script src="jquery/jquery.toggle-password.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="layer/layer.js"></script>
 <script>
+
+    $(function(){
+        $('#userpswd').togglePassword({
+            el: '#togglePassword'
+        });
+        $('#userspswd').togglePassword({
+            el: '#togglePassword'
+        });
+    });
     function dologin() {
         //非空校验
         var username = $("#username").val();

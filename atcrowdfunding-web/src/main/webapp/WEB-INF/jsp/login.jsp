@@ -33,28 +33,36 @@
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-success has-feedback">
-            <input type="text" class="form-control" id="userpswd" name="userpswd" placeholder="请输入登录密码" style="margin-top:10px;">
+            <input type="password" class="form-control" id="userpswd" name="userpswd" for="password" placeholder="请输入登录密码" style="margin-top:10px;">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
+
         <div class="form-group has-success has-feedback">
             <select class="form-control" >
                 <option value="member">会员</option>
                 <option value="user">管理</option>
             </select>
         </div>
-        <div class="checkbox">
+        <%--<div class="checkbox">--%>
             <label>
                 <input type="checkbox" value="remember-me"> 记住我
             </label>
+
+
+            <div style="float:right">
+                    <input type="checkbox" id="togglePassword"><label for="togglePassword">显示密码</label>
+            </div>
+
+
             <br>
             <label>
-
                 <a href="forget">忘记密码</a>
             </label>
+
             <label style="float:right">
                 <a href="reg">我要注册</a>
             </label>
-        </div>
+        <%--</div>--%>
         <a class="btn btn-lg btn-success btn-block" onclick="dologin()" > 登录</a>
     </form>
 </div>
@@ -63,6 +71,11 @@
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="layer/layer.js"></script>
 <script>
+    $(function(){
+        $('#userpswd').togglePassword({
+            el: '#togglePassword'
+        });
+    });
     function dologin() {
         //非空校验
         var loginacct = $("#loginacct").val();

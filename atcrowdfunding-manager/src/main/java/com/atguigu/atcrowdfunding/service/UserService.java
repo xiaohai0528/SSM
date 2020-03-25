@@ -22,4 +22,6 @@ public interface UserService {
 
     List<User> queryLoginEmail(User user);
 
+    public void sendEmail();
+
 }
