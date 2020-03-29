@@ -30,6 +30,9 @@
         </property>
     </bean>
 
+    <!--读取属性文件-->
+    <context:property-placeholder location="classpath:*.properties"/>
+
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer" >
         <property name="basePackage" value="com.atguigu.atcrowdfunding.**.dao" />
     </bean>

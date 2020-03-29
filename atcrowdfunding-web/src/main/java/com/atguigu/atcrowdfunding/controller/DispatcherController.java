@@ -1,6 +1,7 @@
 package com.atguigu.atcrowdfunding.controller;
 
 import com.atguigu.atcrowdfunding.Utils.MD5Utils;
+import com.atguigu.atcrowdfunding.Utils.SendMail;
 import com.atguigu.atcrowdfunding.bean.AJAXResult;
 import com.atguigu.atcrowdfunding.bean.User;
 import com.atguigu.atcrowdfunding.service.UserService;
@@ -10,14 +11,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.io.IOException;
 
 @Controller
 public class DispatcherController {
 
     @Autowired
     private UserService userService;
+
+
+
 
     /**
      * 返回到登录页面
@@ -141,34 +148,17 @@ public class DispatcherController {
         user.setUserpswd(pswd);
 
 
-        List<User> dbUser = userService.queryLoginEmail(user);
+        int countLogin = userService.queryLogin(user);
 
-        String u = null;
+        int countEmail = userService.queryEmail(user);
+
         int i = 0;
-        String loginacct = null;
-        //String email = null;
+        if (countLogin > 0 || countEmail > 0 ){
 
-
-        for (User user1 : dbUser) {
-            loginacct = user1.getLoginacct();
-
-            if(user.getLoginacct() != loginacct){
-                loginacct = null;
-            }
-            //email = user1.getEmail();
-        }
-
-        if (dbUser == null ){
-
-            userService.saveUser(user);
-            result.setSuccrsss(0);
-            System.out.println("数据为空"+i);
-
-        }else {
-            if ( loginacct != null ) {
+            if ( countLogin > 0 ) {
                 result.setSuccrsss(1);
                 i = result.getSuccrsss();
-                System.out.println(loginacct+"获取"+i);
+                System.out.println("用户名获取"+i);
 
             }else{
                 result.setSuccrsss(2);
@@ -179,9 +169,40 @@ public class DispatcherController {
 
             }
 
+
+
+        }else {
+            userService.saveUser(user);
+            result.setSuccrsss(0);
+            System.out.println("数据为"+i);
+
         }
 
 
         return result;
     }
+
+    @RequestMapping("/doPost")
+    @ResponseBody
+    public Object doPost(User user, HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        AJAXResult result = new AJAXResult();
+        // 获取用户的邮箱
+        // 实例化用户对象
+        //User user = null;
+        // 实例化一个发送邮件的对象
+        SendMail mySendMail = new SendMail();
+        // 根据页面获取到的邮箱找到该用户信息
+       User users = userService.getUserByEmail(user);
+        // 如果查到该用户，并且用户名和页面输入相同验证成功，发送邮件
+        if (user != null) {
+            mySendMail.sendMail(users.getEmail(), "xxx管理系统提醒，您的密码为：" + users.getUserpswd());
+            result.setSuccess(true);
+        }else {
+            result.setSuccess(false);
+        }
+
+        return result;
+    }
+
 }

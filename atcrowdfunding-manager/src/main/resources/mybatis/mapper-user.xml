@@ -12,12 +12,16 @@
         from t_user
     </select>
 
-    <!--<select id="query4LoginEmail" resultType="int">
-        select count(*) from t_user where loginacct = #{loginacct} or  email = #{email}
-    </select>-->
+    <select id="getUserByEmail" resultType="com.atguigu.atcrowdfunding.bean.User">
+        SELECT loginacct,email,userpswd FROM t_user WHERE email = #{email}
+    </select>
 
-    <select id="queryLoginEmail" resultType="com.atguigu.atcrowdfunding.bean.User">
-        select * from t_user where loginacct = #{loginacct} or  email = #{email}
+    <select id="queryLogin" resultType="int">
+        select count(*) from t_user  where loginacct = #{loginacct}
+    </select>
+
+    <select id="queryEmail" resultType="int">
+        select count(*)  from t_user  where  email = #{email}
     </select>
 
 
