@@ -24,5 +24,7 @@
         select count(*)  from t_user  where  email = #{email}
     </select>
 
-
+    <select id="updateUserPswd" resultType="com.atguigu.atcrowdfunding.bean.User">
+        update t_user set userpswd = #{userpswd} where email = #{email}
+    </select>
 </mapper>

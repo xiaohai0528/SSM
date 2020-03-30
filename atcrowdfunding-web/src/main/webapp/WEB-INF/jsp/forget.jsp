@@ -32,6 +32,14 @@
             <input type="text" class="form-control" id="email" name="email" placeholder="请输入邮箱地址" autofocus>
             <span class="glyphicon glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
+        <div class="form-group has-success has-feedback">
+            <input type="password" class="form-control" id="userpswd" name="userpswd" for="password"  placeholder="请输入登录密码" >
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="form-group has-success has-feedback">
+            <input type="password" class="form-control" id="userspswd" name="userspswd" for="password" placeholder="请再次输入登录密码" style="margin-top:10px;">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
         <div class="form-group">
             <div class="input-group has-success has-feedback">
                 <input type="text" class="form-control" id="usercode" name="usercode" placeholder="请输入验证码">
@@ -87,20 +95,34 @@
     });
 
     function sendemail() {
-        var loginacct = $("#loginacct").val();
+        var email = $("#email").val()
         var userpswd = $("#userpswd").val();
         var userspswd = $("#userspswd").val();
-        var email = $("#email").val()
         //表单元素value取值不会为null，取值是空字符串
-        if (loginacct == "") {
-            layer.msg("用户名不能为空，请输入", {time: 3000, icon: 5, shift: 6}, function () {
+        if (email == "") {
+            layer.msg("邮箱不能为空，请输入", {time: 3000, icon: 5, shift: 6}, function () {
 
             });
 
             return;
         }
-        if (email == "") {
-            layer.msg("邮箱不能为空，请输入", {time: 3000, icon: 5, shift: 6}, function () {
+        if (userpswd == "") {
+            layer.msg("新密码不能为空，请输入", {time: 3000, icon: 5, shift: 6}, function () {
+
+            });
+
+            return;
+        }
+        if (userspswd == "") {
+            layer.msg("新密码不能为空，请输入", {time: 3000, icon: 5, shift: 6}, function () {
+
+            });
+
+            return;
+        }
+
+        if (userpswd != userspswd) {
+            layer.msg("两次密码不一致，请重新输入", {time: 3000, icon: 5, shift: 6}, function () {
 
             });
 
@@ -110,13 +132,12 @@
         $.ajax({
             url: "doPost",
             data : {
-                "loginacct":loginacct,
                 "email":email
             },
             async : false,
 
             beforeSend : function () {
-                loadingIndex = layer.msg('处理中', {icon: 16});
+                loadingIndex = layer.msg('处理中', {time:3000,icon: 16});
             },
             success : function (result) {
                 layer.close(loadingIndex);
@@ -144,19 +165,11 @@
 
     function dologin() {
         //非空校验
-        var loginacct = $("#loginacct").val();
         var userpswd = $("#userpswd").val();
         var userspswd = $("#userspswd").val();
         var usercode = $("#usercode").val();
         var email = $("#email").val()
         //表单元素value取值不会为null，取值是空字符串
-        if (loginacct == "") {
-            layer.msg("用户名不能为空，请输入", {time: 3000, icon: 5, shift: 6}, function () {
-
-            });
-
-            return;
-        }
         if (email == "") {
           layer.msg("邮箱不能为空，请输入", {time: 3000, icon: 5, shift: 6}, function () {
 
@@ -196,9 +209,6 @@
 
             return;
         }
-
-
-
         //提交表单
         //alert("提交表单 ");
         //$("#loginForm").submit();
@@ -207,7 +217,7 @@
         var loadingIndex =null;
         $.ajax({
             type : "POST",
-            url  : "saveUser",
+            url  : "updateUserPswd",
             data : {
                 "userpswd" : userpswd,
                 "usercode" : usercode,

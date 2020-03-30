@@ -76,7 +76,7 @@ public class SendMail {
         MimeMessage message = new MimeMessage(session);
 
         // 设置发件人姓名和编码格式
-        message.setFrom(new InternetAddress(sendMail, "某某登陆系统", "UTF-8"));
+        message.setFrom(new InternetAddress(sendMail, "尚筹网-创意产品众筹平台找回密码功能", "UTF-8"));
 
         // 收件人
         message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress(receiveMail, "尊敬的用户", "UTF-8"));

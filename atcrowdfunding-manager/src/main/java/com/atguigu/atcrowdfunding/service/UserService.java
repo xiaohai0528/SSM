@@ -24,4 +24,6 @@ public interface UserService {
 
     int queryEmail(User user);
 
+    User updateUserPswd(User user);
+
 }

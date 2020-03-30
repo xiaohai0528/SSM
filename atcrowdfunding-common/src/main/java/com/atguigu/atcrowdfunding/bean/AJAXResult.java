@@ -6,6 +6,16 @@ public class AJAXResult {
     private int succrsss;
     private Object data;
 
+    private int random;
+
+    public int getRandom() {
+        return random;
+    }
+
+    public void setRandom(int random) {
+        this.random = random;
+    }
+
     public Object getData() {
         return data;
     }

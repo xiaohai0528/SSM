@@ -48,8 +48,15 @@ public class UserServiceImpl implements UserService {
         return userDao.queryEmail(user);
     }
 
+    public User updateUserPswd(User user) {
+        return userDao.updateUserPswd(user);
+    }
+
     public User getUserByEmail(User user){
         return userDao.getUserByEmail(user);
     }
+
+
+
 
 }

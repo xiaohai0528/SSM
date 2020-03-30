@@ -7,6 +7,15 @@ public class User {
     private String loginacct;
     private String userpswd;
     private String email;
+    private int random;
+
+    public int getRandom() {
+        return random;
+    }
+
+    public void setRandom(int random) {
+        this.random = random;
+    }
 
     public Integer getId() {
         return id;

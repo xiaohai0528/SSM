@@ -182,11 +182,13 @@ public class DispatcherController {
         return result;
     }
 
+    //获取验证码功能
     @RequestMapping("/doPost")
     @ResponseBody
     public Object doPost(User user, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AJAXResult result = new AJAXResult();
+
         // 获取用户的邮箱
         // 实例化用户对象
         //User user = null;
@@ -195,8 +197,30 @@ public class DispatcherController {
         // 根据页面获取到的邮箱找到该用户信息
        User users = userService.getUserByEmail(user);
         // 如果查到该用户，并且用户名和页面输入相同验证成功，发送邮件
-        if (user != null) {
-            mySendMail.sendMail(users.getEmail(), "xxx管理系统提醒，您的密码为：" + users.getUserpswd());
+        if (users != null) {
+            //生成6位验证码
+            result.setRandom ((int)((Math.random()*9+1)*100000));
+            mySendMail.sendMail(users.getEmail(), "尚筹网-创意产品众筹平台，您的密码为：" + result.getRandom());
+            result.setSuccess(true);
+        }else {
+            result.setSuccess(false);
+        }
+        return result;
+    }
+
+
+    //获取验证码功能
+    @ResponseBody
+    @RequestMapping("/updateUserPswd")
+    public Object updateUserPswd(User user) {
+        AJAXResult result = new AJAXResult();
+
+        User users = userService.getUserByEmail(user);
+
+        if (users != null && result.getRandom() == user.getRandom()) {
+            String pswd = MD5Utils.md5(user.getUserpswd());
+            user.setUserpswd(pswd);
+            userService.updateUserPswd(user);
             result.setSuccess(true);
         }else {
             result.setSuccess(false);

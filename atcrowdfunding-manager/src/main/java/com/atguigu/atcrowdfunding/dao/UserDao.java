@@ -27,4 +27,6 @@ public interface UserDao {
     int queryLogin(User user);
 
     int queryEmail(User user);
+
+    User updateUserPswd(User user);
 }
